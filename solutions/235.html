@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Problem 235: Lowest Common Ancestor of a Binary Search Tree</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 4px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>LeetCode Problem 235: Lowest Common Ancestor of a Binary Search Tree</h1>
+
+    <h2>Approach and Thought Process</h2>
+    <p>
+        The problem requires finding the lowest common ancestor (LCA) of two nodes in a Binary Search Tree (BST). 
+    </p>
+    <p>
+        我的解法是:通过preorder traversal找到到这两个节点的路径,将路径分别储存在两个数组中,然后找到两个数组的最后一个公共元素,就是LCA
+    </p>
+   
+
+    <h2>Solution Code</h2>
+    <pre>
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        while (root != NULL) {
+            // If both nodes are smaller than root, move left
+            if (p->val < root->val && q->val < root->val) {
+                root = root->left;
+            }
+            // If both nodes are greater than root, move right
+            else if (p->val > root->val && q->val > root->val) {
+                root = root->right;
+            }
+            // Split point: current root is the LCA
+            else {
+                return root;
+            }
+        }
+        return NULL; // In case the tree is empty
+    }
+};
+    </pre>
+    <h2>Alternative Solution</h2>
+    <p>
+       还有第二种解法,来自b站up主 华南溜达虎. 清晰高效.
+    </p>
+    <h3>Code</h3>
+    <pre>
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        TreeNode* cur = root;
+        while (cur) {
+            // If both nodes are smaller than the current node
+            if (p->val < cur->val && q->val < cur->val) {
+                cur = cur->left;
+            }
+            // If both nodes are greater than the current node
+            else if (p->val > cur->val && q->val > cur->val) {
+                cur = cur->right;
+            }
+            // Split point or direct match
+            else {
+                return cur;
+            }
+        }
+        return nullptr; // In case the tree is empty
+    }
+};
+    </pre>
+</body>
+</html>

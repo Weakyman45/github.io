@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Solution: Binary Search Tree</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 4px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Leetcode Problem 530: Minimum Absolute Difference in BST</h1>
+
+    <h2>Problem Description</h2>
+    <p>
+        Given a binary search tree (BST), we aim to find the minimum difference between the values of any two nodes. 
+    </p>
+
+    <h2>Approach and Thought Process</h2>
+    <p>
+        The problem can be efficiently solved using an <strong>in-order traversal</strong> of the BST. An in-order traversal of a BST visits nodes in ascending order, 
+        which makes it ideal for comparing adjacent nodes to compute the minimum difference. The steps are as follows:
+    </p>
+    <ol>
+        <li>Perform an in-order traversal of the BST and store the values in a sorted list.</li>
+        <li>Iterate through the list of values and calculate the difference between adjacent values.</li>
+        <li>Track the minimum difference encountered during this iteration.</li>
+        <li>Return the minimum difference as the final result.</li>
+    </ol>
+
+    <h2>Solution Code</h2>
+    <pre>
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> inorder;
+    void inorderRecursive(TreeNode* node) {
+        if (node != nullptr) {
+            inorderRecursive(node->left);
+            inorder.push_back(node->val);
+            inorderRecursive(node->right);
+        }
+    }
+    int getMinimumDifference(TreeNode* root) {
+        inorderRecursive(root);
+        int minDiff = INT_MAX;
+        for (int i = 1; i < inorder.size(); i++) {
+            minDiff = min(minDiff, inorder[i] - inorder[i - 1]);
+        }
+        return minDiff;
+    }
+};
+    </pre>
+
+  
+
+  
+
+
+
+   
