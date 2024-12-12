@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="LeetCode #98 - Validate Binary Search Tree"/>
+  <title>LeetCode #1 - Two Sum</title>
+  <link rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+  <header>
+    <h1>LeetCode #98 - Validate Binary Search Tree</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="98.html">Back to this exercise</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Problem Description</h2>
+      <p>
+        Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+      </p>
+    </section>
+
+    <section>
+      <h2>Thought Process</h2>
+      <ul>
+        <li>Recursion: simply check if the left and right subtrees are valid BSTs. But that's flawed. To correctly validate the BST, you need to ensure that at each node, it respects not just the immediate parent’s constraint, but the entire chain of ancestors. </li>
+        <li>Optimized approach: use Min/Max Range Passing.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Solution Code</h2>
+      <pre><code>
+        class Solution {
+            public:
+                bool helper(TreeNode* root, long minVal, long maxVal) {
+                    if (!root) return true;
+                    if (root->val <= minVal || root->val >= maxVal) return false;
+                    return helper(root->left, minVal, root->val) && helper(root->right, root->val, maxVal);
+                }
+            
+                bool isValidBST(TreeNode* root) {
+                    return helper(root, LONG_MIN, LONG_MAX);
+                }
+            };
+</code></pre>
+    </section>
+
+   
+
+    
+  </main>
+
+  <footer>
+    <p>&copy; 2024 <weakyman45>. All rights reserved.</p>
+  </footer>
+</body>
+</html>
